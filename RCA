@@ -1,0 +1,44 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Simulated Equipment Failure Dataset
+data = {
+    'Equipment_ID': [1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008],
+    'Failure_Type': ['Overheating', 'Wear and Tear', 'Power Issue', 'Overheating',
+                     'Power Issue', 'Overheating', 'Wear and Tear', 'Calibration Error'],
+    'Operating_Hours': [1200, 1500, 1300, 1100, 1400, 1000, 1600, 900],
+    'Last_Maintenance_Days': [90, 120, 80, 150, 100, 180, 110, 200],
+    'Environment': ['Dusty', 'Clean', 'Dusty', 'Humid', 'Clean', 'Humid', 'Dusty', 'Dusty']
+}
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Display basic failure frequency
+print("Failure Frequency by Type:")
+print(df['Failure_Type'].value_counts())
+
+# Plot 1: Failure Type Distribution
+plt.figure(figsize=(8, 5))
+sns.countplot(data=df, x='Failure_Type', palette='coolwarm')
+plt.title("Equipment Failure Types")
+plt.xticks(rotation=20)
+plt.tight_layout()
+plt.savefig("failure_types.png")
+plt.show()
+
+# Plot 2: Operating Hours vs Last Maintenance Days
+plt.figure(figsize=(8, 5))
+sns.scatterplot(data=df, x='Last_Maintenance_Days', y='Operating_Hours', hue='Failure_Type', style='Environment', s=100)
+plt.title("Maintenance Delay vs Operating Hours")
+plt.tight_layout()
+plt.savefig("maintenance_vs_hours.png")
+plt.show()
+
+# Root Cause Analysis Summary
+print("\n--- Root Cause Analysis Summary ---")
+print("1. Overheating failures occur mostly in dusty or humid environments with delayed maintenance.")
+print("2. Power issues appear regardless of cleanliness, indicating electrical inspection needs.")
+print("3. Wear and Tear links to high usage hours, suggesting better scheduling and part replacement.")
+print("4. Calibration Error is rare but needs sensor recalibration monitoring.")
